@@ -1,26 +1,34 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import LoginPage from "./features/LoginPage";
+import Dashboard from "./features/dashboard/dashboard";
 
-function App() {
+
+const App: React.FC = () => {
+  // Simple auth check example (token exists in localStorage)
+  debugger
+  const isAuthenticated = !!localStorage.getItem("token");
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route
+          path="/"
+          element={
+             <LoginPage />
+          }
+        />
+        <Route
+          path="/dashboard"
+          element={
+      <Dashboard /> 
+          }
+        />
+        {/* Add a catch-all route */}
+        <Route path="*" element={<Navigate to="/" replace />} />
+      </Routes>
+    </BrowserRouter>
   );
-}
+};
 
 export default App;
